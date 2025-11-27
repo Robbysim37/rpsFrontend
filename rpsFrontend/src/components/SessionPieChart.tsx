@@ -11,14 +11,10 @@ import {
 } from "@/components/ui/card"
 import { ChartContainer } from "@/components/ui/chart"
 import type { ChartConfig } from "@/components/ui/chart"
+import { useContext } from "react"
+import { MoveHistoryContext } from "@/context/MoveHistory/MoveHistoryContext"
 
 export const description = "A pie chart with a label"
-
-const chartData = [
-  { result: "Loss", percentage: 20, fill: "var(--chart-2)" },
-  { result: "Win",  percentage: 20, fill: "var(--chart-1)" },
-  { result: "Tie",  percentage: 30, fill: "var(--chart-3)" },
-]
 
 const chartConfig = {
   win: {
@@ -35,22 +31,61 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function PieChartComponent() {
+export function SessionPieChartComponent() {
 
+const moveContext = useContext(MoveHistoryContext)
+
+let percentageWins = 0
+let percentageLoss = 0
+let percentageTie = 0
+let totalGames = 0
+
+if (moveContext) {
+  totalGames = moveContext.moveHistory.length
+
+  if (totalGames > 0) {
+    percentageWins =
+      (moveContext.numberOfResults.wins / totalGames) * 100
+    percentageLoss =
+      (moveContext.numberOfResults.losses / totalGames) * 100
+    percentageTie =
+      (moveContext.numberOfResults.ties / totalGames) * 100
+  }
+}
   
+
+  const rawChartData = [
+  {
+    result: "Loss",
+    percentage: Math.round(percentageLoss * 100) / 100,
+    fill: "var(--chart-2)",
+  },
+  {
+    result: "Win",
+    percentage: Math.round(percentageWins * 100) / 100,
+    fill: "var(--chart-1)",
+  },
+  {
+    result: "Tie",
+    percentage: Math.round(percentageTie * 100) / 100,
+    fill: "var(--chart-3)",
+  },
+]
+
+const chartData = rawChartData.filter(d => d.percentage > 0)
 
   return (
     <Card className="flex flex-col">
       <CardHeader className="justify-center items-center pb-0">
         <CardTitle className="text-center">Session Winrate</CardTitle>
         <CardDescription className="text-center">
-          Total Games Played: WIP
+          Total Games Played: {totalGames}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0 px-0">
         <ChartContainer
           config={chartConfig}
-          className="h-[15vw] w-[20vw] pb-0"
+          className="h-[15vw] w-[25vw] pb-0"
         >
           <PieChart>
             <Pie
@@ -59,7 +94,7 @@ export function PieChartComponent() {
               nameKey="result"
               label={({ name, value }) => `${name}: ${value}%`}
             >
-              {chartData.map((entry) => (
+              {chartData.map(entry => (
                 <Cell key={entry.result} fill={entry.fill} />
               ))}
             </Pie>

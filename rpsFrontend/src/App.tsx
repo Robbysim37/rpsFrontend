@@ -1,7 +1,8 @@
 import "./App.css";
 import { GameplayButtons } from "./components/GameplayButtons";
-import { PieChartComponent } from "./components/PieChart";
+import { SessionPieChartComponent } from "./components/SessionPieChart";
 import { Navbar } from "@/components/Navbar"
+import { ResultsText } from "./components/ResultsText";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <Navbar/>
 
       <div className="flex w-full justify-center mb-8">
-        <p className="font-science-gothic text-3xl">Choose your move</p>
+        <ResultsText/>
       </div>
 
       <div className="flex w-full justify-around mb-16">
@@ -19,8 +20,8 @@ function App() {
         <GameplayButtons buttonType="scissors" />
       </div>
       <div className="flex w-full justify-around pb-16">
-        <PieChartComponent/>
-        <PieChartComponent/>
+        <SessionPieChartComponent/>
+        <SessionPieChartComponent/>
       </div>
     </div>
   );

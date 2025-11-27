@@ -37,14 +37,11 @@ export const GameplayButtons = ({ buttonType }: GameplayButtonsProps) => {
 
     try {
       const response = await sendPlayRequest(request)
-      console.log("gets the response:" + response.winner)
       moveContext?.addToResultHistory(response.winner)
+      moveContext?.increaseResultCount(response.winner)
     } catch (err) {
       console.error("Error sending request:", err)
     }
-
-    console.log(moveContext?.moveHistory)
-    console.log(moveContext?.resultHistory)
   }
 
   return (
