@@ -19,6 +19,6 @@ export const ResultsText = () => {
         {!initialMessage && moveContext?.resultHistory[moveContext.resultHistory.length -1] == 1 &&
         <p className="font-science-gothic text-3xl text-chart-2">Computer wins!</p>}
         {!initialMessage && moveContext?.resultHistory[moveContext.resultHistory.length -1] == 2 &&
-        <p className="font-science-gothic text-3xl text-chart-3">TIe!</p>}
+        <p className="font-science-gothic text-3xl text-chart-3">Tie!</p>}
     </>)
 }
