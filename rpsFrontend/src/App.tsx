@@ -1,8 +1,8 @@
 import "./App.css";
-import { GameplayButtons } from "./components/GameplayButtons";
 import { SessionPieChartComponent } from "./components/SessionPieChart";
 import { Navbar } from "@/components/Navbar"
-import { ResultsText } from "./components/ResultsText";
+import { GlobalWinratePieChartComponent } from "./components/GlobalWInratePiechart";
+import { GameContainer } from "./components/GameContainer";
 
 function App() {
   return (
@@ -10,18 +10,11 @@ function App() {
 
       <Navbar/>
 
-      <div className="flex w-full justify-center mb-8">
-        <ResultsText/>
-      </div>
+      <GameContainer/>
 
-      <div className="flex w-full justify-around mb-16">
-        <GameplayButtons buttonType="rock" />
-        <GameplayButtons buttonType="paper" />
-        <GameplayButtons buttonType="scissors" />
-      </div>
       <div className="flex w-full justify-around pb-16">
         <SessionPieChartComponent/>
-        <SessionPieChartComponent/>
+        <GlobalWinratePieChartComponent/>
       </div>
     </div>
   );

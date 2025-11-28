@@ -7,19 +7,30 @@ import { buildPlayRequest } from "@/api/buildPlayRequest";
 import { sendPlayRequest } from "@/api/playRound";
 import { useContext } from "react";
 import { MoveHistoryContext } from "@/context/MoveHistory/MoveHistoryContext";
-
-type GameplayButtonsProps = {
-    buttonType: "rock" | "paper" | "scissors"
-}
+import { ChartDataContext } from "@/context/ChartData/ChartDataContext";
+import { Spinner } from "./ui/spinner";
 
 const buttonStyle = `w-[20vw] h-[20vw] flex justify-center cursor-pointer 
       items-center rounded-full bg-linear-to-b from-[#1a1a1a] to-[#0d0d0d]`;
 
-export const GameplayButtons = ({ buttonType }: GameplayButtonsProps) => {
+type GameplayButtonsProps = {
+  buttonType: "rock" | "paper" | "scissors"
+  isDisabled: boolean
+  setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const GameplayButtons = ({ buttonType,isDisabled,setIsDisabled }: GameplayButtonsProps) => {
 
   const moveContext = useContext(MoveHistoryContext)
+  const chartDataContext = useContext(ChartDataContext)
 
   const chooseMove = async () => {
+
+    if(isDisabled){
+      return
+    }
+
+    setIsDisabled(true)
 
     let moveToPlay:Move = 0
 
@@ -39,8 +50,16 @@ export const GameplayButtons = ({ buttonType }: GameplayButtonsProps) => {
       const response = await sendPlayRequest(request)
       moveContext?.addToResultHistory(response.winner)
       moveContext?.increaseResultCount(response.winner)
+      const gamePlayed = {
+        humanMove: moveToPlay,
+        aiMove: response.aiMove,
+        humansResult: response.winner
+      }
+      chartDataContext?.addToAllGames(gamePlayed)
+      setIsDisabled(false)
     } catch (err) {
       console.error("Error sending request:", err)
+      setIsDisabled(false)
     }
   }
 
@@ -55,7 +74,7 @@ export const GameplayButtons = ({ buttonType }: GameplayButtonsProps) => {
           }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
-          <FaRegHandRock size={96} />
+          {!isDisabled ? <FaRegHandRock size={96} /> : <Spinner className="flex h-32 items-center justify-center size-12"/>}
         </motion.div>}
       {buttonType === "paper" && <motion.div
           className={buttonStyle}
@@ -66,7 +85,7 @@ export const GameplayButtons = ({ buttonType }: GameplayButtonsProps) => {
           }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
-          <FaRegHandPaper  size={96} />
+          {!isDisabled ? <FaRegHandPaper size={96} /> : <Spinner className="flex h-32 items-center justify-center size-12"/>}
         </motion.div>}
       {buttonType === "scissors" && <motion.div
           className={buttonStyle}
@@ -77,7 +96,7 @@ export const GameplayButtons = ({ buttonType }: GameplayButtonsProps) => {
           }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
-          <FaRegHandScissors  size={96} />
+          {!isDisabled ? <FaRegHandScissors size={96} /> : <Spinner className="flex h-32 items-center justify-center size-12"/>}
         </motion.div>}
     </>
   );

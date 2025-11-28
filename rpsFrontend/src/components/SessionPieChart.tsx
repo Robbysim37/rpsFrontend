@@ -53,7 +53,6 @@ if (moveContext) {
   }
 }
   
-
   const rawChartData = [
   {
     result: "Loss",

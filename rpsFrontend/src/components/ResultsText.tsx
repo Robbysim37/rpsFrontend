@@ -15,10 +15,10 @@ export const ResultsText = () => {
         {initialMessage && 
         <p className="font-science-gothic text-3xl">Choose Your Move</p>}
         {!initialMessage && moveContext?.resultHistory[moveContext.resultHistory.length -1] == 0 &&
-        <p className="font-science-gothic text-3xl">You win!</p>}
+        <p className="font-science-gothic text-3xl text-[var(--chart-1)]" >You win!</p>}
         {!initialMessage && moveContext?.resultHistory[moveContext.resultHistory.length -1] == 1 &&
-        <p className="font-science-gothic text-3xl">Computer wins!</p>}
+        <p className="font-science-gothic text-3xl text-[var(--chart-2)]">Computer wins!</p>}
         {!initialMessage && moveContext?.resultHistory[moveContext.resultHistory.length -1] == 2 &&
-        <p className="font-science-gothic text-3xl">TIe!</p>}
+        <p className="font-science-gothic text-3xl text-[var(--chart-3)]">TIe!</p>}
     </>)
 }
