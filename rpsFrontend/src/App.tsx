@@ -12,7 +12,7 @@ function App() {
 
       <GameContainer/>
 
-      <div className="flex w-full justify-around pb-16">
+      <div className="flex flex-col md:flex-row w-full md:justify-around items-center pb-16">
         <SessionPieChartComponent/>
         <GlobalWinratePieChartComponent/>
       </div>

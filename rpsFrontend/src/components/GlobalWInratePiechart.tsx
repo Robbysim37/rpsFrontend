@@ -72,7 +72,7 @@ export function GlobalWinratePieChartComponent() {
     const chartData = rawChartData.filter(d => d.percentage > 0)
 
     return (
-        <Card className="flex flex-col">
+        <Card className="flex flex-col w-fit">
         <CardHeader className="justify-center items-center pb-0">
             <CardTitle className="text-center">Global Winrate</CardTitle>
             <CardDescription className="text-center">
@@ -82,7 +82,7 @@ export function GlobalWinratePieChartComponent() {
         <CardContent className="flex-1 pb-0 px-0">
             <ChartContainer
             config={chartConfig}
-            className="h-[15vw] w-[25vw] pb-0"
+            className="h-[35vw] w-[75vw] md:h-[15vw] md:w-[25vw] pb-0"
             >
             <PieChart>
                 <Pie

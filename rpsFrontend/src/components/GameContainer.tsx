@@ -12,10 +12,12 @@ export const GameContainer = () => {
           <ResultsText/>
         </div>
 
-        <div className="flex w-full justify-around mb-16">
-          <GameplayButtons buttonType="rock" isDisabled={isDisabled} setIsDisabled={setIsDisabled}/>
-          <GameplayButtons buttonType="paper" isDisabled={isDisabled} setIsDisabled={setIsDisabled}/>
-          <GameplayButtons buttonType="scissors" isDisabled={isDisabled} setIsDisabled={setIsDisabled}/>
+        <div className="h-[70vh] flex flex-col items-center justify-around mb-16 w-full
+          md:flex-row md:h-fit
+        ">
+          <GameplayButtons buttonType="rock" isDisabled={isDisabled} setIsDisabled={setIsDisabled} />
+          <GameplayButtons buttonType="paper" isDisabled={isDisabled} setIsDisabled={setIsDisabled} />
+          <GameplayButtons buttonType="scissors" isDisabled={isDisabled} setIsDisabled={setIsDisabled} />
         </div>
 
     </div>)

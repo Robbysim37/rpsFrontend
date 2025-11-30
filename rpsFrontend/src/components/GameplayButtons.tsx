@@ -10,7 +10,7 @@ import { MoveHistoryContext } from "@/context/MoveHistory/MoveHistoryContext";
 import { ChartDataContext } from "@/context/ChartData/ChartDataContext";
 import { Spinner } from "./ui/spinner";
 
-const buttonStyle = `w-[20vw] h-[20vw] flex justify-center cursor-pointer 
+const buttonStyle = `w-[30vw] h-[30vw] sm:w-[20vw] sm:h-[20vw] flex justify-center cursor-pointer 
       items-center rounded-full bg-linear-to-b from-[#1a1a1a] to-[#0d0d0d]`;
 
 type GameplayButtonsProps = {
@@ -74,7 +74,7 @@ export const GameplayButtons = ({ buttonType,isDisabled,setIsDisabled }: Gamepla
           }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
-          {!isDisabled ? <FaRegHandRock size={96} /> : <Spinner className="flex h-32 items-center justify-center size-12"/>}
+          {!isDisabled ? <FaRegHandRock className="text-3xl md:text-8xl"/> : <Spinner className="flex h-32 items-center justify-center size-12"/>}
         </motion.div>}
       {buttonType === "paper" && <motion.div
           className={buttonStyle}
@@ -85,7 +85,7 @@ export const GameplayButtons = ({ buttonType,isDisabled,setIsDisabled }: Gamepla
           }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
-          {!isDisabled ? <FaRegHandPaper size={96} /> : <Spinner className="flex h-32 items-center justify-center size-12"/>}
+          {!isDisabled ? <FaRegHandPaper className="text-3xl md:text-8xl" /> : <Spinner className="flex h-32 items-center justify-center size-12"/>}
         </motion.div>}
       {buttonType === "scissors" && <motion.div
           className={buttonStyle}
@@ -96,7 +96,7 @@ export const GameplayButtons = ({ buttonType,isDisabled,setIsDisabled }: Gamepla
           }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
-          {!isDisabled ? <FaRegHandScissors size={96} /> : <Spinner className="flex h-32 items-center justify-center size-12"/>}
+          {!isDisabled ? <FaRegHandScissors className="text-3xl md:text-8xl" /> : <Spinner className="flex h-32 items-center justify-center size-12"/>}
         </motion.div>}
     </>
   );
