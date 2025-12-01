@@ -2,7 +2,7 @@ import type { AllAnonymousGamesDto } from "@/DTOs/GamesStats"
 
 export const sendGameStatsRequest = async (): Promise<AllAnonymousGamesDto> => {
 
-  const response = await fetch("http://localhost:5049/api/stats", {
+  const response = await fetch("https://rpsbackend-grcjbrawddd7gyac.canadacentral-01.azurewebsites.net/api/stats", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
