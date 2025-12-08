@@ -1,4 +1,5 @@
 import { GoogleLoginButton } from "./GoogleLoginButton";
+import { sendGoogleCredentials } from "@/api/sendGoogleCredentials";
 
 export function Navbar() {
   return (
@@ -8,7 +9,7 @@ export function Navbar() {
         <div className="text-2xl md:text-6xl font-semibold tracking-tight font-science-gothic">
           RPS vs The World
         </div>
-        <div><GoogleLoginButton onSuccess={()=>{}}></GoogleLoginButton></div>
+        <div><GoogleLoginButton onSuccess={sendGoogleCredentials}></GoogleLoginButton></div>
       </div>
     </header>
   )

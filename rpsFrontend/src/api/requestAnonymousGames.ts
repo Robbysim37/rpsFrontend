@@ -2,7 +2,10 @@ import type { AllAnonymousGamesDto } from "@/DTOs/GamesStats"
 
 export const sendGameStatsRequest = async (): Promise<AllAnonymousGamesDto> => {
 
-  const response = await fetch("https://rpsbackend-grcjbrawddd7gyac.canadacentral-01.azurewebsites.net/api/stats", {
+  const liveURL = import.meta.env.VITE_REQ_ANON_GAME_LIVE
+  // const testURL = import.meta.env.VITE_REQ_ANON_GAME_TEST
+
+  const response = await fetch(liveURL, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

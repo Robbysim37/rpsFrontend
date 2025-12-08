@@ -3,7 +3,10 @@ import type { PlayResponseDTO } from "@/DTOs/HumanMoves"
 
 export const sendPlayRequest = async (dto: PlayRequestDTO): Promise<PlayResponseDTO> => {
 
-  const response = await fetch("https://rpsbackend-grcjbrawddd7gyac.canadacentral-01.azurewebsites.net/api/play", {
+  const liveURL = import.meta.env.VITE_PLAY_ROUND_LIVE
+  // const testURL = import.meta.env.VITE_PLAY_ROUND_LIVE
+
+  const response = await fetch(liveURL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
