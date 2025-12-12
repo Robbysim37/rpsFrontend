@@ -16,7 +16,19 @@ export const sendGoogleCredentials = async (idToken : string) => {
         return;
       }
 
+      // THIS IS USED WHEN REQUESTING FROM PRIVATE ENDPOINTS
+
+      // const token = sessionStorage.getItem("authToken");
+
+      // await fetch(`${import.meta.env.VITE_API_URL}/api/me`, {
+      //   headers: {
+      //     Authorization: token ? `Bearer ${token}` : "",
+      //   },
+      // });
+
+
       const data = await res.json();
+      sessionStorage.setItem("authToken", data.token);
       console.log("Backend response:", data);
 
       // Later: store access token, update AuthContext, redirect, etc.
