@@ -1,4 +1,4 @@
-import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContextComponent"
+import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContext"
 
 export const ResultsText = () => {
 

@@ -1,4 +1,4 @@
-export const sendGoogleCredentials = async (idToken : string) => {
+export const sendGoogleCredentials = async (accessToken : string) => {
 
     const testURL = import.meta.env.VITE_SEND_GOOGLE_ID_TEST
 
@@ -8,7 +8,7 @@ export const sendGoogleCredentials = async (idToken : string) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idToken }),
+        body: JSON.stringify({ accessToken }),
       });
 
       if (!res.ok) {

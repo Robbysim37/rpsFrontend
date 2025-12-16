@@ -11,8 +11,7 @@ import {
 } from "@/components/ui/card"
 import { ChartContainer } from "@/components/ui/chart"
 import type { ChartConfig } from "@/components/ui/chart"
-import { useContext } from "react"
-import { ChartDataProvider, useChartData } from "@/context/ChartData/ChartDataContextComponent"
+import { useChartData } from "@/context/ChartData/ChartDataContext"
 
 export const description = "A pie chart with a label"
 
