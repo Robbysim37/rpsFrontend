@@ -11,8 +11,7 @@ import {
 } from "@/components/ui/card"
 import { ChartContainer } from "@/components/ui/chart"
 import type { ChartConfig } from "@/components/ui/chart"
-import { useContext } from "react"
-import { MoveHistoryContext } from "@/context/MoveHistory/MoveHistoryContext"
+import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContextComponent"
 
 export const description = "A pie chart with a label"
 
@@ -33,7 +32,7 @@ const chartConfig = {
 
 export function SessionPieChartComponent() {
 
-const moveContext = useContext(MoveHistoryContext)
+const moveContext = useMoveHistory()
 
 let percentageWins = 0
 let percentageLoss = 0

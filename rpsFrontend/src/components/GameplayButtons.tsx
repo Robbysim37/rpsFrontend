@@ -5,10 +5,9 @@ import { motion } from "framer-motion";
 import type { Move } from "@/Types/MoveAndResultsEnum";
 import { buildPlayRequest } from "@/api/buildPlayRequest";
 import { sendPlayRequest } from "@/api/playRound";
-import { useContext } from "react";
-import { MoveHistoryContext } from "@/context/MoveHistory/MoveHistoryContext";
-import { ChartDataContext } from "@/context/ChartData/ChartDataContext";
 import { Spinner } from "./ui/spinner";
+import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContextComponent";
+import { useChartData } from "@/context/ChartData/ChartDataContextComponent";
 
 const buttonStyle = `w-[30vw] h-[30vw] sm:w-[20vw] sm:h-[20vw] flex justify-center cursor-pointer 
       items-center rounded-full bg-linear-to-b from-[#1a1a1a] to-[#0d0d0d]`;
@@ -21,8 +20,8 @@ type GameplayButtonsProps = {
 
 export const GameplayButtons = ({ buttonType,isDisabled,setIsDisabled }: GameplayButtonsProps) => {
 
-  const moveContext = useContext(MoveHistoryContext)
-  const chartDataContext = useContext(ChartDataContext)
+  const moveContext = useMoveHistory()
+  const chartDataContext = useChartData()
 
   const chooseMove = async () => {
 

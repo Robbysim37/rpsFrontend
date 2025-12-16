@@ -12,7 +12,7 @@ import {
 import { ChartContainer } from "@/components/ui/chart"
 import type { ChartConfig } from "@/components/ui/chart"
 import { useContext } from "react"
-import { ChartDataContext } from "@/context/ChartData/ChartDataContext"
+import { ChartDataProvider, useChartData } from "@/context/ChartData/ChartDataContextComponent"
 
 export const description = "A pie chart with a label"
 
@@ -33,7 +33,7 @@ const chartConfig = {
 
 export function GlobalWinratePieChartComponent() {
 
-    const chartDataContext = useContext(ChartDataContext)
+    const chartDataContext = useChartData()
 
     let percentageWins = 0
     let percentageLoss = 0

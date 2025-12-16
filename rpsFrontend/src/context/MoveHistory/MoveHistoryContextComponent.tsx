@@ -1,13 +1,20 @@
-"use client"
-
-import { useState,  } from "react"
+import { useState } from "react"
 import type {ReactNode} from "react"
 import type { Move,Result } from "@/Types/MoveAndResultsEnum"
-import {
-  MoveHistoryContext,
-  type MoveHistoryContextValue,
-} from "./MoveHistoryContext"
 import type { ResultCounts } from "@/Types/ResultCounts"
+import { createContext } from "react"
+import { useContext } from "react"
+
+type MoveHistoryContextValue = {
+  moveHistory: Move[]
+  resultHistory: Result[]
+  numberOfResults: ResultCounts
+  addToMoveHistory: (entry: Move) => void
+  addToResultHistory: (entry: Result) => void
+  increaseResultCount: (entry: 0|1|2) => void
+}
+
+const MoveHistoryContext = createContext<MoveHistoryContextValue | undefined>(undefined)
 
 export const MoveHistoryProvider = ({ children }: { children: ReactNode }) => {
   const [moveHistory, setMoveHistory] = useState<Move[]>([])
@@ -53,4 +60,12 @@ export const MoveHistoryProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </MoveHistoryContext.Provider>
   )
+}
+
+export function useMoveHistory() {
+  const context = useContext(MoveHistoryContext);
+  if (!context) {
+    throw new Error("useAuth must be used inside AuthProvider");
+  }
+  return context;
 }

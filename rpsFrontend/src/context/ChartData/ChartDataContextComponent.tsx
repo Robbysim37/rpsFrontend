@@ -1,12 +1,20 @@
-"use client"
-
 import { useState,useEffect } from "react"
 import type {ReactNode} from "react"
 import type { Game } from "@/Types/Game"
 import { sendGameStatsRequest } from "@/api/requestAnonymousGames"
+import { createContext } from "react"
+import { useContext } from "react"
 
-import { type ChartDataContextValue, ChartDataContext } from "./ChartDataContext"
+
 import type { ResultCounts } from "@/Types/ResultCounts"
+
+type ChartDataContextValue = {
+    allGames: Game[]
+    totalResults: ResultCounts
+    addToAllGames: (entry: Game) => void
+}
+
+const ChartDataContext = createContext<ChartDataContextValue | undefined>(undefined)
 
 export const ChartDataProvider = ({ children }: { children: ReactNode }) => {
     const [allGames,setAllgames] = useState<Game[]>([])
@@ -55,4 +63,12 @@ export const ChartDataProvider = ({ children }: { children: ReactNode }) => {
         {children}
         </ChartDataContext.Provider>
     )
+}
+
+export function useChartData() {
+  const context = useContext(ChartDataContext);
+  if (!context) {
+    throw new Error("useAuth must be used inside AuthProvider");
+  }
+  return context;
 }

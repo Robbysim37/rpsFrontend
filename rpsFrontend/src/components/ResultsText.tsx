@@ -1,9 +1,8 @@
-import { MoveHistoryContext } from "@/context/MoveHistory/MoveHistoryContext"
-import { useContext } from "react"
+import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContextComponent"
 
 export const ResultsText = () => {
 
-    const moveContext = useContext(MoveHistoryContext)
+    const moveContext = useMoveHistory()
 
     let initialMessage = true
 

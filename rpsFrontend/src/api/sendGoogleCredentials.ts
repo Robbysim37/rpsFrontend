@@ -31,8 +31,6 @@ export const sendGoogleCredentials = async (idToken : string) => {
       sessionStorage.setItem("authToken", data.token);
       console.log("Backend response:", data);
 
-      // Later: store access token, update AuthContext, redirect, etc.
-
     } catch (err) {
       console.error("Failed to call backend:", err);
     }
