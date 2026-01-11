@@ -1,74 +1,56 @@
-import { useState,useEffect } from "react"
-import type {ReactNode} from "react"
-import type { Game } from "@/Types/Game"
-import { sendGameStatsRequest } from "@/api/requestAnonymousGames"
-import { createContext } from "react"
-import { useContext } from "react"
+import { useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
+import type { Game } from "@/Types/Game";
+import type { ResultCounts } from "@/Types/ResultCounts";
+import { sendGameStatsRequest } from "@/api/requestAnonymousGames";
+import { ChartDataContext, type ChartDataContextValue } from "./ChartDataContext";
 
+function computeTotals(games: Game[]): ResultCounts {
+  const totals: ResultCounts = { wins: 0, losses: 0, ties: 0 };
 
-import type { ResultCounts } from "@/Types/ResultCounts"
+  for (const game of games) {
+    if (game.humansResult === 0) totals.wins++;
+    else if (game.humansResult === 1) totals.losses++;
+    else if (game.humansResult === 2) totals.ties++;
+  }
 
-type ChartDataContextValue = {
-    allGames: Game[]
-    totalResults: ResultCounts
-    addToAllGames: (entry: Game) => void
+  return totals;
 }
-
-const ChartDataContext = createContext<ChartDataContextValue | undefined>(undefined)
 
 export const ChartDataProvider = ({ children }: { children: ReactNode }) => {
-    const [allGames,setAllgames] = useState<Game[]>([])
-    const [totalResults, setTotalResults] = useState<ResultCounts>({wins:0,losses:0,ties:0})
+  const [allGames, setAllGames] = useState<Game[]>([]);
 
-    const calculateTotalResults = (array:Game[]) => {
-        const tempTotalResults = {wins:0,losses:0,ties:0}
-        array.forEach(game => {
-            if(game.humansResult == 0){
-                tempTotalResults.wins++
-            }
-            if(game.humansResult == 1){
-                tempTotalResults.losses++
-            }
-            if(game.humansResult == 2){
-                tempTotalResults.ties++
-            }
-        })
-        setTotalResults(tempTotalResults)
+  useEffect(() => {
+    let cancelled = false;
+
+    async function grabGames() {
+      const response = await sendGameStatsRequest();
+      if (cancelled) return;
+      setAllGames(response.anonymousGames);
     }
 
-    useEffect(() => {
-        async function grabGames() {
-            const response = (await sendGameStatsRequest()).anonymousGames
-            setAllgames(response)
-            calculateTotalResults(response)
-            
-        }
-        grabGames()
-    }, [])
+    grabGames();
 
-    const addToAllGames = (entry: Game) => {
-        console.log([...allGames,entry])
-        calculateTotalResults([...allGames,entry])
-        setAllgames(prev => [...prev,entry])
-    }
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-    const value: ChartDataContextValue = {
-        allGames,
-        totalResults,
-        addToAllGames
-    }
+  const totalResults = useMemo(() => computeTotals(allGames), [allGames]);
 
-    return (
-        <ChartDataContext.Provider value={value}>
-        {children}
-        </ChartDataContext.Provider>
-    )
-}
+  const addToAllGames: ChartDataContextValue["addToAllGames"] = (entry) => {
+    setAllGames((prev) => [...prev, entry]);
+  };
 
-export function useChartData() {
-  const context = useContext(ChartDataContext);
-  if (!context) {
-    throw new Error("useAuth must be used inside AuthProvider");
-  }
-  return context;
-}
+  const value: ChartDataContextValue = {
+    allGames,
+    totalResults,
+    addToAllGames,
+  };
+
+  return (
+    <ChartDataContext.Provider value={value}>
+      {children}
+    </ChartDataContext.Provider>
+  );
+};

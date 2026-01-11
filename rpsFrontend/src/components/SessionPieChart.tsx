@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { ChartContainer } from "@/components/ui/chart"
 import type { ChartConfig } from "@/components/ui/chart"
-import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContextComponent"
+import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContext"
 
 export const description = "A pie chart with a label"
 

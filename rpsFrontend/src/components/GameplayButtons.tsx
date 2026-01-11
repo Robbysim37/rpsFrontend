@@ -6,8 +6,8 @@ import type { Move } from "@/Types/MoveAndResultsEnum";
 import { buildPlayRequest } from "@/api/buildPlayRequest";
 import { sendPlayRequest } from "@/api/playRound";
 import { Spinner } from "./ui/spinner";
-import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContextComponent";
-import { useChartData } from "@/context/ChartData/ChartDataContextComponent";
+import { useChartData } from "@/context/ChartData/ChartDataContext";
+import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContext";
 
 const buttonStyle = `w-[30vw] h-[30vw] sm:w-[20vw] sm:h-[20vw] flex justify-center cursor-pointer 
       items-center rounded-full bg-linear-to-b from-[#1a1a1a] to-[#0d0d0d]`;

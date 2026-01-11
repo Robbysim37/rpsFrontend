@@ -5,7 +5,7 @@ import { MoveHistoryProvider } from './context/MoveHistory/MoveHistoryContextCom
 import { ChartDataProvider } from './context/ChartData/ChartDataContextComponent.tsx'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router.tsx'
-import { AuthProvider } from './context/Auth/AuthContextComponent.tsx'
+import { AuthProvider } from './context/Auth/AuthProvider.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
