@@ -4,7 +4,9 @@ import type { PlayResponseDTO } from "@/DTOs/HumanMoves"
 export const sendPlayRequest = async (dto: PlayRequestDTO): Promise<PlayResponseDTO> => {
 
   const liveURL = import.meta.env.VITE_PLAY_ROUND_LIVE
-  const testURL = import.meta.env.VITE_PLAY_ROUND_LIVE
+  const testURL = import.meta.env.VITE_PLAY_ROUND_TEST
+
+  console.log(dto)
 
   const response = await fetch(testURL, {
     method: "POST",

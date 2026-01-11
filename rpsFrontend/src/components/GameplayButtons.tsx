@@ -43,7 +43,7 @@ export const GameplayButtons = ({ buttonType,isDisabled,setIsDisabled }: Gamepla
 
     moveContext?.addToMoveHistory(moveToPlay)
 
-    const request = buildPlayRequest(moveToPlay,moveContext?.moveHistory)
+    const request = buildPlayRequest(moveToPlay,moveContext?.moveHistory,moveContext?.resultHistory)
 
     try {
       const response = await sendPlayRequest(request)
