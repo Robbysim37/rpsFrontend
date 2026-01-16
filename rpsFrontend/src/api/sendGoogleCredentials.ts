@@ -29,7 +29,7 @@ export const sendGoogleCredentials = async (accessToken : string) => {
 
       const data = await res.json();
       sessionStorage.setItem("authToken", data.token);
-      console.log("Backend response:", data);
+      window.location.reload();
 
     } catch (err) {
       console.error("Failed to call backend:", err);
