@@ -75,8 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout: AuthContextValue["logout"] = () => {
     sessionStorage.removeItem("authToken");
-    setToken(null);
-    setUser(null);
+    window.location.reload()
   };
 
   const value: AuthContextValue = {

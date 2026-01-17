@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import {motion} from "framer-motion"
 
 declare global {
   interface Window {
@@ -70,12 +71,17 @@ export function GoogleLogin({ onSuccess, onError }: Props) {
   };
 
   return (
-    <button
+    <motion.button
       type="button"
       onClick={handleClick}
-      className="px-4 py-2 rounded-md border border-white/20 hover:border-white/40"
+      className="px-4 py-2 rounded-md border hover:cursor-pointer"
+      whileHover={{
+        scale: 1.05,
+        boxShadow: "0 0 24px rgba(255,255,255,0.6)",
+      }}
+      transition={{ type: "spring", stiffness: 260, damping: 20 }}
     >
       Continue with Google
-    </button>
+    </motion.button>
   );
 }

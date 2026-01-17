@@ -13,7 +13,7 @@ export const sendGameStatsRequest = async (): Promise<AllAnonymousGamesDto> => {
   })
 
   if (!response.ok) {
-    throw new Error("Failed to send play request")
+    throw new Error("Failed to send GET request")
   }
 
   return response.json()

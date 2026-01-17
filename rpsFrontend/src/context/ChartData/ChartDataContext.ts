@@ -4,8 +4,11 @@ import type { ResultCounts } from "@/Types/ResultCounts";
 
 export type ChartDataContextValue = {
   allGames: Game[];
+  userGames: Game[];
   totalResults: ResultCounts;
+  totalUserResults: ResultCounts;
   addToAllGames: (entry: Game) => void;
+  pullUserGames: () => void
 };
 
 export const ChartDataContext = createContext<ChartDataContextValue | undefined>(
