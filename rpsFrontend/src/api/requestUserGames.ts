@@ -4,7 +4,7 @@ import type { AllAnonymousGamesDto } from "@/DTOs/GamesStats"
 export const requestUserGames = async (token:string): Promise<AllAnonymousGamesDto> => {
 
   const liveURL = import.meta.env.VITE_REQ_USER_GAMES_LIVE
-  const testURL = import.meta.env.VITE_REQ_USER_GAMES_TEST
+  //const testURL = import.meta.env.VITE_REQ_USER_GAMES_TEST
 
   const response = await fetch(liveURL, {
     method: "GET",

@@ -1,6 +1,6 @@
 export const sendGoogleCredentials = async (accessToken : string) => {
 
-    const testURL = import.meta.env.VITE_SEND_GOOGLE_ID_TEST
+    //const testURL = import.meta.env.VITE_SEND_GOOGLE_ID_TEST
     const liveURL = import.meta.env.VITE_SEND_GOOGLE_ID_LIVE
 
     try {

@@ -19,7 +19,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const meURLLive = import.meta.env.VITE_ME_LIVE
-    const meUrl = import.meta.env.VITE_ME as string;
+    //const meUrl = import.meta.env.VITE_ME as string;
     const controller = new AbortController();
 
     (async () => {
