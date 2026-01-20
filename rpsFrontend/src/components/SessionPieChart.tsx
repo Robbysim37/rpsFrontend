@@ -73,7 +73,7 @@ if (moveContext) {
 const chartData = rawChartData.filter(d => d.percentage > 0)
 
   return (
-    <Card className="flex flex-col w-fit mb-16 md:mb-0">
+    <Card className="flex flex-col w-fit md:mb-0">
       <CardHeader className="justify-center items-center pb-0">
         <CardTitle className="text-center">Session Winrate</CardTitle>
         <CardDescription className="text-center">

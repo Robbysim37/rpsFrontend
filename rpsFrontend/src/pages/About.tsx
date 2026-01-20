@@ -4,9 +4,9 @@ import { Card } from "@/components/ui/card";
 
 export const About = () => {
   return (
-    <Card className="mx-16 p-8">
-      <h1>About RPS vs The World</h1>
-      <p>
+    <Card className="mx-4 p-4 md:mx-16 md:p-8">
+      <h1 className="text-[24px]! md:text-[32px]">About RPS vs The World</h1>
+      <p className="text-[12px] md:text-[16px]">
         On the surface, this is a simple project where you can play Rock Paper Scissors against an algorithm of my own design.
         While this is definitely true, the project’s origins and purpose are a little more complicated than that. I began my journey
         as a programmer in the spring of 2022, and one of my first projects was building the game of Rock Paper Scissors using pure

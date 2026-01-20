@@ -60,9 +60,8 @@ export const ChartDataProvider = ({ children }: { children: ReactNode }) => {
   const addToAllGames: ChartDataContextValue["addToAllGames"] = (entry) => {
     if(authContext.token){
       setUserGames((prev) => [...prev, entry]);
-    }else{
-      setAllGames((prev) => [...prev, entry]);
     }
+    setAllGames((prev) => [...prev, entry]);
   };
 
   const value: ChartDataContextValue = {

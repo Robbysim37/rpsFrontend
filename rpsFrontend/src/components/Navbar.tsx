@@ -15,7 +15,7 @@ export function Navbar() {
         <div className="text-sm md:text-base font-medium">
           <Link
             to="/about"
-            className="text-inherit! no-underline hover:opacity-80 transition-opacity"
+            className="text-inherit! no-underline hover:opacity-80 transition-opacity ml-4 sm:ml-0"
           >
             About
           </Link>

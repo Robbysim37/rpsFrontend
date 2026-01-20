@@ -12,7 +12,7 @@ export const Home = () => {
   return (<>
       <GameContainer/>
 
-      <div className="flex flex-col md:flex-row w-full md:justify-around items-center pb-16">
+      <div className="flex w-full flex-col items-center gap-8 pb-16 md:flex-row md:justify-around md:gap-0">
         <SessionPieChartComponent/>
         {authContext.token && <UserWinratePichart/>}
         <GlobalWinratePieChartComponent/>

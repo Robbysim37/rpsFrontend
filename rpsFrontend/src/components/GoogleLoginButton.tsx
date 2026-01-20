@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import {motion} from "framer-motion"
+import { FcGoogle } from "react-icons/fc";
 
 declare global {
   interface Window {
@@ -74,14 +75,15 @@ export function GoogleLogin({ onSuccess, onError }: Props) {
     <motion.button
       type="button"
       onClick={handleClick}
-      className="px-4 py-2 rounded-md border hover:cursor-pointer"
+      className="px-4 py-2 rounded-md md:border hover:cursor-pointer"
       whileHover={{
         scale: 1.05,
         boxShadow: "0 0 24px rgba(255,255,255,0.6)",
       }}
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
     >
-      Continue with Google
+      <span className="hidden md:inline">Continue with Google</span>
+      <FcGoogle className="inline md:hidden bg-transparent" size={30}/>
     </motion.button>
   );
 }
