@@ -83,7 +83,7 @@ const chartData = rawChartData.filter(d => d.percentage > 0)
       <CardContent className="flex-1 pb-0 px-0">
         <ChartContainer
           config={chartConfig}
-          className="h-[35vw] w-[75vw] md:h-[15vw] md:w-[25vw] pb-0"
+          className="h-[35vw] w-[75vw] md:h-[15vw] md:w-[25vw] pb-0 z-10000"
         >
           <PieChart>
             <Pie
