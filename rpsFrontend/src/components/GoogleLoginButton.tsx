@@ -1,65 +1,89 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useRef } from "react"
+import { useRef } from "react";
+import {motion} from "framer-motion"
+import { FcGoogle } from "react-icons/fc";
 
 declare global {
   interface Window {
-    google?: any
+    google?: {
+      accounts: {
+        oauth2: {
+          initTokenClient: (cfg: TokenClientConfig) => TokenClient;
+        };
+      };
+    };
   }
 }
 
-type GoogleLoginButtonProps = {
-  onSuccess: (idToken: string) => void
-  onError?: () => void
-}
+type TokenClientConfig = {
+  client_id: string;
+  scope: string;
+  callback: (resp: TokenResponse) => void;
+  error_callback?: (err: unknown) => void;
+};
 
-export function GoogleLoginButton({ onSuccess, onError }: GoogleLoginButtonProps) {
-  const buttonDivRef = useRef<HTMLDivElement | null>(null)
-  const clientId = import.meta.env.VITE_GOOGLE_CREDENTIALS_ID as string | undefined
+type TokenClient = {
+  requestAccessToken: (opts?: { prompt?: "" | "consent" | "select_account" }) => void;
+};
 
-  useEffect(() => {
-    console.log("GoogleLoginButton mounted. clientId =", clientId)
+type TokenResponse =
+  | { access_token: string; expires_in: number; token_type: string; scope: string }
+  | { error: string; error_description?: string; error_uri?: string };
 
+type Props = {
+  onSuccess: (accessToken: string) => void;
+  onError?: (msg: string) => void;
+};
+
+export function GoogleLogin({ onSuccess, onError }: Props) {
+  const clientRef = useRef<TokenClient | null>(null);
+  const clientId = import.meta.env.VITE_GOOGLE_CREDENTIALS_ID as string | undefined;
+
+  const handleClick = () => {
     if (!clientId) {
-      console.error("Missing VITE_GOOGLE_CREDENTIALS_ID in env")
-      return
+      onError?.("Missing VITE_GOOGLE_CREDENTIALS_ID");
+      return;
     }
 
-    if (!window.google) {
-      console.error("window.google is undefined – is the <script> tag in index.html?")
-      return
+    const oauth2 = window.google?.accounts?.oauth2;
+    if (!oauth2) {
+      onError?.("Google OAuth2 library not loaded (check script tag)");
+      return;
     }
 
-    if (!buttonDivRef.current) {
-      console.error("buttonDivRef is null")
-      return
+    if (!clientRef.current) {
+      clientRef.current = oauth2.initTokenClient({
+        client_id: clientId,
+        // Pick scopes you need. If you just need profile info, use openid email profile.
+        // NOTE: tokenClient returns an *access token*, not an ID token.
+        scope: "openid email profile",
+        callback: (resp) => {
+          if ("error" in resp) {
+            onError?.(`${resp.error}${resp.error_description ? `: ${resp.error_description}` : ""}`);
+            return;
+          }
+          onSuccess(resp.access_token);
+        },
+        error_callback: () => onError?.("Popup blocked or OAuth failed"),
+      });
     }
 
-    window.google.accounts.id.initialize({
-      client_id: clientId,
-      callback: (response: any) => {
-        const idToken = response.credential as string | undefined
-        if (!idToken) {
-          console.error("No ID token (response.credential) from Google")
-          onError?.()
-          return
-        }
-        onSuccess(idToken)
-      },
-    })
-
-    window.google.accounts.id.renderButton(buttonDivRef.current, {
-      type: "standard",
-      theme: "outline",
-      size: "medium",
-      shape: "pill",
-      text: "continue_with",
-      width: 200,
-    })
-  }, [clientId, onSuccess, onError])
+    // Forces a popup prompt on every click
+    clientRef.current.requestAccessToken({ prompt: "select_account" });
+  };
 
   return (
-    <div className="flex items-center justify-center">
-      <div ref={buttonDivRef} />
-    </div>
-  )
+    <motion.button
+      type="button"
+      onClick={handleClick}
+      className="px-4 py-2 rounded-md md:border hover:cursor-pointer"
+      whileHover={{
+        scale: 1.05,
+        boxShadow: "0 0 24px rgba(255,255,255,0.6)",
+      }}
+      transition={{ type: "spring", stiffness: 260, damping: 20 }}
+    >
+      <span className="hidden md:inline">Continue with Google</span>
+      <FcGoogle className="inline md:hidden bg-transparent" size={30}/>
+    </motion.button>
+  );
 }

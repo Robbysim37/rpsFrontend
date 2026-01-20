@@ -30,7 +30,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function GlobalWinratePieChartComponent() {
+export function UserWinratePichart() {
 
     const chartDataContext = useChartData()
 
@@ -40,14 +40,14 @@ export function GlobalWinratePieChartComponent() {
     let totalGames = 0
 
     if (chartDataContext) {
-        totalGames = chartDataContext.allGames.length
+        totalGames = chartDataContext.userGames.length
 
         percentageWins =
-        (chartDataContext.totalResults.wins / totalGames) * 100
+        (chartDataContext.totalUserResults.wins / totalGames) * 100
         percentageLoss =
-        (chartDataContext.totalResults.losses / totalGames) * 100
+        (chartDataContext.totalUserResults.losses / totalGames) * 100
         percentageTie =
-        (chartDataContext.totalResults.ties / totalGames) * 100
+        (chartDataContext.totalUserResults.ties / totalGames) * 100
     }
   
     const rawChartData = [
@@ -73,7 +73,7 @@ export function GlobalWinratePieChartComponent() {
     return (
         <Card className="flex flex-col w-fit">
         <CardHeader className="justify-center items-center pb-0">
-            <CardTitle className="text-center">Global Winrate</CardTitle>
+            <CardTitle className="text-center">Personal Winrate</CardTitle>
             <CardDescription className="text-center">
             Total Games Played: {totalGames}
             </CardDescription>

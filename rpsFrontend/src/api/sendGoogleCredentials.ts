@@ -1,14 +1,15 @@
-export const sendGoogleCredentials = async (idToken : string) => {
+export const sendGoogleCredentials = async (accessToken : string) => {
 
     const testURL = import.meta.env.VITE_SEND_GOOGLE_ID_TEST
+    const liveURL = import.meta.env.VITE_SEND_GOOGLE_ID_LIVE
 
     try {
-      const res = await fetch(testURL, {
+      const res = await fetch(liveURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idToken }),
+        body: JSON.stringify({ accessToken }),
       });
 
       if (!res.ok) {
@@ -29,9 +30,7 @@ export const sendGoogleCredentials = async (idToken : string) => {
 
       const data = await res.json();
       sessionStorage.setItem("authToken", data.token);
-      console.log("Backend response:", data);
-
-      // Later: store access token, update AuthContext, redirect, etc.
+      window.location.reload();
 
     } catch (err) {
       console.error("Failed to call backend:", err);

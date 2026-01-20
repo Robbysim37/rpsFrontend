@@ -2,7 +2,7 @@ import type { Move, Result } from "../Types/MoveAndResultsEnum"
 
 export interface PlayRequestDTO {
     HumanMoves: Move[]
-    PreviousHumanResults?: Result[]
+    PreviousHumanResults: Result[]
 }
 
 export interface PlayResponseDTO  {

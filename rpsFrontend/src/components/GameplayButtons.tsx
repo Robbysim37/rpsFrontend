@@ -4,11 +4,12 @@ import { FaRegHandPaper } from "react-icons/fa";
 import { motion } from "framer-motion";
 import type { Move } from "@/Types/MoveAndResultsEnum";
 import { buildPlayRequest } from "@/api/buildPlayRequest";
-import { sendPlayRequest } from "@/api/playRound";
-import { useContext } from "react";
-import { MoveHistoryContext } from "@/context/MoveHistory/MoveHistoryContext";
-import { ChartDataContext } from "@/context/ChartData/ChartDataContext";
+import { sendPlayRequest } from "@/api/sendPlayRequest";
 import { Spinner } from "./ui/spinner";
+import { useChartData } from "@/context/ChartData/ChartDataContext";
+import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContext";
+import { useAuth } from "@/context/Auth/AuthContext";
+import { sendUserPlayRequest } from "@/api/sendUserPlayRequest";
 
 const buttonStyle = `w-[30vw] h-[30vw] sm:w-[20vw] sm:h-[20vw] flex justify-center cursor-pointer 
       items-center rounded-full bg-linear-to-b from-[#1a1a1a] to-[#0d0d0d]`;
@@ -21,8 +22,9 @@ type GameplayButtonsProps = {
 
 export const GameplayButtons = ({ buttonType,isDisabled,setIsDisabled }: GameplayButtonsProps) => {
 
-  const moveContext = useContext(MoveHistoryContext)
-  const chartDataContext = useContext(ChartDataContext)
+  const moveContext = useMoveHistory()
+  const chartDataContext = useChartData()
+  const authContext = useAuth()
 
   const chooseMove = async () => {
 
@@ -44,10 +46,15 @@ export const GameplayButtons = ({ buttonType,isDisabled,setIsDisabled }: Gamepla
 
     moveContext?.addToMoveHistory(moveToPlay)
 
-    const request = buildPlayRequest(moveToPlay,moveContext?.moveHistory)
+    const request = buildPlayRequest(moveToPlay,moveContext?.moveHistory,moveContext?.resultHistory)
 
     try {
-      const response = await sendPlayRequest(request)
+      let response
+      if(authContext.token){
+        response = await sendUserPlayRequest(request,authContext.token)
+      }else{
+        response = await sendPlayRequest(request)
+      }
       moveContext?.addToResultHistory(response.winner)
       moveContext?.increaseResultCount(response.winner)
       const gamePlayed = {
