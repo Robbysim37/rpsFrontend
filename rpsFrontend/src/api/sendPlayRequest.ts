@@ -6,8 +6,6 @@ export const sendPlayRequest = async (dto: PlayRequestDTO): Promise<PlayResponse
   const liveURL = import.meta.env.VITE_PLAY_ROUND_LIVE
   //const testURL = import.meta.env.VITE_PLAY_ROUND_TEST
 
-  console.log(dto)
-
   const response = await fetch(liveURL, {
     method: "POST",
     headers: {

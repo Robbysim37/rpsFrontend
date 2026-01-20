@@ -6,8 +6,6 @@ export const sendUserPlayRequest = async (dto: PlayRequestDTO, token:string): Pr
   const liveURL = import.meta.env.VITE_PLAY_USER_ROUND_LIVE
   //const testURL = import.meta.env.VITE_PLAY_USER_ROUND_TEST
 
-  console.log(dto)
-
   const response = await fetch(liveURL, {
     method: "POST",
     headers: {

@@ -47,8 +47,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         const userData: User = await res.json();
         setUser(userData);
-        console.log("✅ /me verified — user loaded");
-        console.log(userData)
       } catch (err) {
         if (err instanceof DOMException && err.name === "AbortError") return;
         console.error("Failed to call /me:", err);
