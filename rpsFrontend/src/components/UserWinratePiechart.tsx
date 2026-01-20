@@ -31,72 +31,80 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function UserWinratePichart() {
+  const chartDataContext = useChartData()
 
-    const chartDataContext = useChartData()
+  let percentageWins = 0
+  let percentageLoss = 0
+  let percentageTie = 0
+  let totalGames = 0
 
-    let percentageWins = 0
-    let percentageLoss = 0
-    let percentageTie = 0
-    let totalGames = 0
+  if (chartDataContext) {
+    totalGames = chartDataContext.userGames.length
 
-    if (chartDataContext) {
-        totalGames = chartDataContext.userGames.length
-
-        percentageWins =
+    // avoid divide-by-zero
+    if (totalGames > 0) {
+      percentageWins =
         (chartDataContext.totalUserResults.wins / totalGames) * 100
-        percentageLoss =
+      percentageLoss =
         (chartDataContext.totalUserResults.losses / totalGames) * 100
-        percentageTie =
+      percentageTie =
         (chartDataContext.totalUserResults.ties / totalGames) * 100
     }
-  
-    const rawChartData = [
-    {
-        result: "Loss",
-        percentage: Math.round(percentageLoss * 100) / 100,
-        fill: "var(--chart-2)",
-    },
-    {
-        result: "Win",
-        percentage: Math.round(percentageWins * 100) / 100,
-        fill: "var(--chart-1)",
-    },
-    {
-        result: "Tie",
-        percentage: Math.round(percentageTie * 100) / 100,
-        fill: "var(--chart-3)",
-    },
-    ]
+  }
 
-    const chartData = rawChartData.filter(d => d.percentage > 0)
+  const rawChartData = [
+    {
+      result: "Loss",
+      percentage: Math.round(percentageLoss * 100) / 100,
+      fill: "var(--chart-2)",
+    },
+    {
+      result: "Win",
+      percentage: Math.round(percentageWins * 100) / 100,
+      fill: "var(--chart-1)",
+    },
+    {
+      result: "Tie",
+      percentage: Math.round(percentageTie * 100) / 100,
+      fill: "var(--chart-3)",
+    },
+  ]
 
-    return (
-        <Card className="flex flex-col w-fit">
-        <CardHeader className="justify-center items-center pb-0">
-            <CardTitle className="text-center">Personal Winrate</CardTitle>
-            <CardDescription className="text-center">
-            Total Games Played: {totalGames}
-            </CardDescription>
-        </CardHeader>
-        <CardContent className="flex-1 pb-0 px-0">
-            <ChartContainer
-            config={chartConfig}
-            className="h-[35vw] w-[75vw] md:h-[15vw] md:w-[25vw] pb-0 z-10000"
+  const chartData = rawChartData.filter((d) => d.percentage > 0)
+
+  return (
+    <Card className="flex flex-col w-fit">
+      <CardHeader className="justify-center items-center pb-0">
+        <CardTitle className="text-center">Personal Winrate</CardTitle>
+        <CardDescription className="text-center">
+          Total Games Played: {totalGames}
+        </CardDescription>
+      </CardHeader>
+
+      {/* allow chart + labels to render outside without being clipped */}
+      <CardContent className="flex-1 pb-0 px-0 overflow-visible">
+        <ChartContainer
+          config={chartConfig}
+          className="h-[35vw] w-[75vw] md:h-[15vw] md:w-[25vw] pb-0 overflow-visible"
+        >
+          {/* margin gives outside labels room so they don't get cut off */}
+          <PieChart margin={{ top: 24, right: 48, bottom: 24, left: 48 }}>
+            <Pie
+              data={chartData}
+              dataKey="percentage"
+              nameKey="result"
+              label={({ name, value }) => `${name}: ${value}%`}
+              labelLine={false}
+              // optional: slightly smaller radius so labels fit better
+              outerRadius="75%"
             >
-            <PieChart>
-                <Pie
-                data={chartData}
-                dataKey="percentage"
-                nameKey="result"
-                label={({ name, value }) => `${name}: ${value}%`}
-                >
-                {chartData.map(entry => (
-                    <Cell key={entry.result} fill={entry.fill} />
-                ))}
-                </Pie>
-            </PieChart>
-            </ChartContainer>
-        </CardContent>
-        </Card>
-    )
+              {chartData.map((entry) => (
+                <Cell key={entry.result} fill={entry.fill} />
+              ))}
+            </Pie>
+          </PieChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
+  )
 }

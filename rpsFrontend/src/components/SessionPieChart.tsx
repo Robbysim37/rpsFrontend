@@ -31,46 +31,42 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function SessionPieChartComponent() {
+  const moveContext = useMoveHistory()
 
-const moveContext = useMoveHistory()
+  let percentageWins = 0
+  let percentageLoss = 0
+  let percentageTie = 0
+  let totalGames = 0
 
-let percentageWins = 0
-let percentageLoss = 0
-let percentageTie = 0
-let totalGames = 0
+  if (moveContext) {
+    totalGames = moveContext.moveHistory.length
 
-if (moveContext) {
-  totalGames = moveContext.moveHistory.length
-
-  if (totalGames > 0) {
-    percentageWins =
-      (moveContext.numberOfResults.wins / totalGames) * 100
-    percentageLoss =
-      (moveContext.numberOfResults.losses / totalGames) * 100
-    percentageTie =
-      (moveContext.numberOfResults.ties / totalGames) * 100
+    if (totalGames > 0) {
+      percentageWins = (moveContext.numberOfResults.wins / totalGames) * 100
+      percentageLoss = (moveContext.numberOfResults.losses / totalGames) * 100
+      percentageTie = (moveContext.numberOfResults.ties / totalGames) * 100
+    }
   }
-}
-  
-  const rawChartData = [
-  {
-    result: "Loss",
-    percentage: Math.round(percentageLoss * 100) / 100,
-    fill: "var(--chart-2)",
-  },
-  {
-    result: "Win",
-    percentage: Math.round(percentageWins * 100) / 100,
-    fill: "var(--chart-1)",
-  },
-  {
-    result: "Tie",
-    percentage: Math.round(percentageTie * 100) / 100,
-    fill: "var(--chart-3)",
-  },
-]
 
-const chartData = rawChartData.filter(d => d.percentage > 0)
+  const rawChartData = [
+    {
+      result: "Loss",
+      percentage: Math.round(percentageLoss * 100) / 100,
+      fill: "var(--chart-2)",
+    },
+    {
+      result: "Win",
+      percentage: Math.round(percentageWins * 100) / 100,
+      fill: "var(--chart-1)",
+    },
+    {
+      result: "Tie",
+      percentage: Math.round(percentageTie * 100) / 100,
+      fill: "var(--chart-3)",
+    },
+  ]
+
+  const chartData = rawChartData.filter((d) => d.percentage > 0)
 
   return (
     <Card className="flex flex-col w-fit md:mb-0">
@@ -80,19 +76,25 @@ const chartData = rawChartData.filter(d => d.percentage > 0)
           Total Games Played: {totalGames}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0 px-0">
+
+      {/* allow chart + labels to render outside without being clipped */}
+      <CardContent className="flex-1 pb-0 px-0 overflow-visible">
         <ChartContainer
           config={chartConfig}
-          className="h-[35vw] w-[75vw] md:h-[15vw] md:w-[25vw] pb-0 z-10000"
+          className="h-[35vw] w-[75vw] md:h-[15vw] md:w-[25vw] pb-0 overflow-visible"
         >
-          <PieChart>
+          {/* margin gives outside labels room so they don't get cut off */}
+          <PieChart margin={{ top: 24, right: 48, bottom: 24, left: 48 }}>
             <Pie
               data={chartData}
               dataKey="percentage"
               nameKey="result"
               label={({ name, value }) => `${name}: ${value}%`}
+              labelLine={false}
+              // optional: slightly smaller radius so labels fit better
+              outerRadius="75%"
             >
-              {chartData.map(entry => (
+              {chartData.map((entry) => (
                 <Cell key={entry.result} fill={entry.fill} />
               ))}
             </Pie>
