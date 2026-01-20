@@ -1,9 +1,10 @@
 export const sendGoogleCredentials = async (accessToken : string) => {
 
     const testURL = import.meta.env.VITE_SEND_GOOGLE_ID_TEST
+    const liveURL = import.meta.env.VITE_SEND_GOOGLE_ID_LIVE
 
     try {
-      const res = await fetch(testURL, {
+      const res = await fetch(liveURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

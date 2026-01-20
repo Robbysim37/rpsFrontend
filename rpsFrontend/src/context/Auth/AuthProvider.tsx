@@ -18,6 +18,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
+    const meURLLive = import.meta.env.VITE_ME_LIVE
     const meUrl = import.meta.env.VITE_ME as string;
     const controller = new AbortController();
 
@@ -25,11 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         setMeChecked(false);
 
-        console.log("meUrl:", meUrl);
-        console.log("token starts:", token?.slice(0, 20));
-        console.log("token parts:", token?.split(".").length);
-
-        const res = await fetch(meUrl, {
+        const res = await fetch(meURLLive, {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
           signal: controller.signal,

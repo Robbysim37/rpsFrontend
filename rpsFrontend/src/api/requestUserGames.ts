@@ -6,7 +6,7 @@ export const requestUserGames = async (token:string): Promise<AllAnonymousGamesD
   const liveURL = import.meta.env.VITE_REQ_USER_GAMES_LIVE
   const testURL = import.meta.env.VITE_REQ_USER_GAMES_TEST
 
-  const response = await fetch(testURL, {
+  const response = await fetch(liveURL, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

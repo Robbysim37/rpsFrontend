@@ -8,7 +8,7 @@ export const sendPlayRequest = async (dto: PlayRequestDTO): Promise<PlayResponse
 
   console.log(dto)
 
-  const response = await fetch(testURL, {
+  const response = await fetch(liveURL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
