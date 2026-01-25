@@ -9,7 +9,7 @@ export const GameContainer = () => {
     return(<div className="flex-col">
 
         <div className="flex w-full justify-center mb-8">
-          <ResultsText/>
+          <ResultsText isDisabled={isDisabled}/>
         </div>
 
         <div className="h-[70vh] flex flex-col items-center justify-around mb-16 w-full

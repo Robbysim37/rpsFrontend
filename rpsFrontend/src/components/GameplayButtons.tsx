@@ -11,7 +11,7 @@ import { useMoveHistory } from "@/context/MoveHistory/MoveHistoryContext";
 import { useAuth } from "@/context/Auth/AuthContext";
 import { sendUserPlayRequest } from "@/api/sendUserPlayRequest";
 
-const buttonStyle = `w-[30vw] h-[30vw] sm:w-[20vw] sm:h-[20vw] flex justify-center cursor-pointer 
+const buttonStyle = `w-[30vw] h-[30vw] sm:w-[15vw] sm:h-[15vw] flex justify-center cursor-pointer 
       items-center rounded-full bg-linear-to-b from-[#1a1a1a] to-[#0d0d0d]`;
 
 type GameplayButtonsProps = {
