@@ -10,7 +10,7 @@ export const About = () => {
         On the surface, this is a simple project where you can play Rock Paper Scissors against an algorithm of my own design.
         While this is definitely true, the project’s origins and purpose are a little more complicated than that. I began my journey
         as a programmer in the spring of 2022, and one of my first projects was building the game of Rock Paper Scissors using pure
-        JavaScript, HTML, and CSS. I remember trying to find other examples of algorithmic and robotic RPS machines and coming across
+        JavaScript, HTML, and CSS. I remember trying to find other examples of algorithmic and robotic RPS machines and came across
         this video:
         <a href={"https://www.youtube.com/watch?v=3nxjjztQKtY"} target="_blank" rel="noopener noreferrer"> here.</a>
         <br/>
@@ -25,7 +25,7 @@ export const About = () => {
         hunting for nearly all four of those years, and going back to school for a degree, I have realized that I need to either grit
         my teeth and take on more debt to earn a piece of paper from a university that tells hiring managers I know how to code, or
         build a portfolio that clearly shows my skills and abilities. This project came back into the mix because of that decision.
-        I am using a Vite frontend with a .NET backend and a PostgreSQL database. I make various fetch requests to my .NET API,
+        I am using a Vite frontend with a .NET backend and a Supabase database. I make various fetch requests to my .NET API,
         create accounts based on users logging in with Google, built a JWT system to ensure security, and use Tailwind, shadcn,
         Framer Motion, and various other libraries to display the game itself, along with data about you and the rest of humanity
         as you battle my algorithm.
